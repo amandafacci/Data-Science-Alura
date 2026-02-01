@@ -1,6 +1,5 @@
 # Alura-teste
 Estudos da Alura
-Testando github
 
 # comando basicos do git
 ## puxar arquivos do GITHUB para máquina local. USAR APENAS UMA VEZ NO INICIO OU QUANDO TRABALHAR EM DOIS COMPUTADORES DIFERENTES
