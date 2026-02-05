@@ -8,7 +8,7 @@ df = pd.read_csv("https://raw.githubusercontent.com/vqrca/dashboard_salarios_dad
 df_limpo = df.dropna()
 
 st.set_page_config(
-    page_title="Analisando - Área de Dados",
+    page_title="Imersão Dados com Python | Alura",
     page_icon="📊",
     layout="wide",
 )
@@ -49,8 +49,8 @@ df_filtrado = df_limpo[
     (df_limpo['contrato'].isin(contratos_selecionados)) &
     (df_limpo['tamanho_empresa'].isin(tamanhos_selecionados))
 ]
-st.title("🎲 Dashboard de Análise de Salários na Área de Dados")
-st.markdown("Explore os dados salariais na área de dados nos últimos anos. Utilize os filtros à esquerda para refinar sua análise.")
+st.title("🎲 Analisando - Área de Dados")
+st.markdown("Aqui você pode explorar os salários na área de dados ao longo dos últimos anos, com base em dados do mundo todo.")
 st.subheader("Métricas gerais (Salário anual em USD)")
 
 if not df_filtrado.empty:
@@ -81,8 +81,9 @@ with col_graf1:
             x='usd',
             y='cargo',
             orientation='h',
-            title="Top 10 cargos por salário médio",
-            labels={'usd': 'Média salarial anual (USD)', 'cargo': ''}
+            title="Top 10: Cargos / Salário médio",
+            labels={'usd': 'Média salarial anual (USD)', 'cargo': ''},
+            color_discrete_sequence=["#4B0202"]
         )
         grafico_cargos.update_layout(title_x=0.1, yaxis={'categoryorder':'total ascending'})
         st.plotly_chart(grafico_cargos, use_container_width=True)
@@ -96,7 +97,12 @@ with col_graf2:
             x='usd',
             nbins=30,
             title="Distribuição de salários anuais",
-            labels={'usd': 'Faixa salarial (USD)', 'count': ''}
+            labels={'usd': 'Faixa salarial (USD)', 'count': 'Quantidade'},
+            color_discrete_sequence=["#4B0202"]
+        )
+        grafico_hist.update_traces(
+        marker_line_color='black', 
+        marker_line_width=1
         )
         grafico_hist.update_layout(title_x=0.1)
         st.plotly_chart(grafico_hist, use_container_width=True)
@@ -113,8 +119,18 @@ with col_graf3:
             remoto_contagem,
             names='tipo_trabalho',
             values='quantidade',
-            title='Proporção dos tipos de trabalho',
-            hole=0.5
+            title='Modelos de trabalho',
+            hole=0.2,
+            color_discrete_sequence=px.colors.sequential.Reds_r,
+            labels={
+                'presencial': 'Presencial',
+                'remoto': 'Remoto',
+                'hibrido': 'Híbrido'
+            }
+        )
+        grafico_remoto.update_traces(
+            textinfo='percent+label',
+            marker=dict(line=dict(color='#000000', width=1))
         )
         grafico_remoto.update_traces(textinfo='percent+label')
         grafico_remoto.update_layout(title_x=0.1)
@@ -124,16 +140,24 @@ with col_graf3:
 
 with col_graf4:
     if not df_filtrado.empty:
-        df_ds = df_filtrado[df_filtrado['cargo'] == 'Data Scientist']
-        media_ds_pais = df_ds.groupby('residencia_iso3')['usd'].mean().reset_index()
-        grafico_paises = px.choropleth(media_ds_pais,
-            locations='residencia_iso3',
-            color='usd',
-            color_continuous_scale='rdylgn',
-            title='Salário médio de Cientista de Dados por país',
-            labels={'usd': 'Salário médio (USD)', 'residencia_iso3': 'País'})
-        grafico_paises.update_layout(title_x=0.1)
-        st.plotly_chart(grafico_paises, use_container_width=True)
+        df_media_salarial = df_limpo.groupby('senioridade')['usd'].mean().sort_values(ascending=False).reset_index()
+
+        fig = px.bar(df_media_salarial,
+             x='senioridade',
+             y='usd',
+             title='Média Salarial Anual por Nível de Experiência (USD)',
+             labels={
+                'senioridade': 'Nível de Experiência',
+                'usd': 'Média Salarial Anual (USD)',
+                'executivo': 'Executivo',
+                'senior': 'Senior',
+                'pleno': 'Pleno',
+                'junior': 'Junior'},
+             template='plotly_white',
+             color_discrete_sequence=["#4B0202"]
+            ) 
+        fig.update_layout(title_x=0.1)
+        st.plotly_chart(fig, use_container_width=True)
     else:
         st.warning("Nenhum dado para exibir no gráfico de países.")
 
