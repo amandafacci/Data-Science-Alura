@@ -1,18 +1,33 @@
-# Alura-teste
-Estudos da Alura
+# 📚 Estudos em Dados & Tecnologia
 
-# comando basicos do git
-## puxar arquivos do GITHUB para máquina local. USAR APENAS UMA VEZ NO INICIO OU QUANDO TRABALHAR EM DOIS COMPUTADORES DIFERENTES
-git pull origin main
+Este repositório reúne meus **estudos, exercícios e projetos práticos** desenvolvidos ao longo de cursos, imersões e treinamentos na área de **dados, programação e tecnologia**.
 
-## ver status dos arquivos. Quando estiver em duvida com arquivos da maquina
-git status
+Aqui estão códigos criados com foco em **aprendizado**, **experimentação** e **evolução contínua** 🚀
 
-## adicionar arquivos no commit. PRIMEIRO COMANDO PARA MANDAR REMOTAMENTE PARA O GITHUB
-git add .
+---
 
-## Commitar com comentário. SEGUNDO COMANDO PARA MANDAR REMOTAMENTE PARA GITHUB
-git commit -m "EXEMPLO"
+## 🎯 Objetivo
 
-## Empurrar pro GITHUB, remoto. COMANDO FINAL PARA MANDAR REMOTAMENTE PARA GITHUB
-git push origin main
+Centralizar meus estudos para:
+- Praticar Python e análise de dados
+- Aplicar conceitos aprendidos em cursos
+- Criar projetos práticos
+- Organizar meu aprendizado de forma clara
+- Evoluir gradualmente para projetos de portfólio
+
+---
+
+## 🧠 Conteúdos Abordados
+
+- Python
+- Análise de dados
+- Visualização de dados
+- Dashboards interativos
+- Lógica de programação
+- Manipulação de dados com Pandas
+- Ferramentas de dados e tecnologia
+
+---
+
+## 📂 Organização do Repositório
+
