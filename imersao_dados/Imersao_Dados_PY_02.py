@@ -2,13 +2,16 @@ import pandas as pd
 import streamlit as st
 import plotly.express as px
 
+
+df = pd.read_csv("https://raw.githubusercontent.com/vqrca/dashboard_salarios_dados/refs/heads/main/dados-imersao-final.csv")
+
+df_limpo = df.dropna()
+
 st.set_page_config(
-    page_title="Dashboard de Salários na Área de Dados",
+    page_title="Analisando - Área de Dados",
     page_icon="📊",
     layout="wide",
 )
-
-df = pd.read_csv("https://raw.githubusercontent.com/vqrca/dashboard_salarios_dados/refs/heads/main/dados-imersao-final.csv")
 
 with st.expander("🔍 Filtros", expanded=False):
 
@@ -17,34 +20,34 @@ with st.expander("🔍 Filtros", expanded=False):
     with col1:
         anos_selecionados = st.multiselect(
             "Ano",
-            sorted(df['ano'].unique()),
-            default=sorted(df['ano'].unique())
+            sorted(df_limpo['ano'].unique()),
+            default=sorted(df_limpo['ano'].unique())
         )
 
         contratos_selecionados = st.multiselect(
             "Tipo de Contrato",
-            sorted(df['contrato'].unique()),
-            default=sorted(df['contrato'].unique())
+            sorted(df_limpo['contrato'].unique()),
+            default=sorted(df_limpo['contrato'].unique())
         )
 
     with col2:
         senioridades_selecionadas = st.multiselect(
             "Senioridade",
-            sorted(df['senioridade'].unique()),
-            default=sorted(df['senioridade'].unique())
+            sorted(df_limpo['senioridade'].unique()),
+            default=sorted(df_limpo['senioridade'].unique())
         )
 
         tamanhos_selecionados = st.multiselect(
             "Tamanho da Empresa",
-            sorted(df['tamanho_empresa'].unique()),
-            default=sorted(df['tamanho_empresa'].unique())
+            sorted(df_limpo['tamanho_empresa'].unique()),
+            default=sorted(df_limpo['tamanho_empresa'].unique())
         )
 
-df_filtrado = df[
-    (df['ano'].isin(anos_selecionados)) &
-    (df['senioridade'].isin(senioridades_selecionadas)) &
-    (df['contrato'].isin(contratos_selecionados)) &
-    (df['tamanho_empresa'].isin(tamanhos_selecionados))
+df_filtrado = df_limpo[
+    (df_limpo['ano'].isin(anos_selecionados)) &
+    (df_limpo['senioridade'].isin(senioridades_selecionadas)) &
+    (df_limpo['contrato'].isin(contratos_selecionados)) &
+    (df_limpo['tamanho_empresa'].isin(tamanhos_selecionados))
 ]
 st.title("🎲 Dashboard de Análise de Salários na Área de Dados")
 st.markdown("Explore os dados salariais na área de dados nos últimos anos. Utilize os filtros à esquerda para refinar sua análise.")
